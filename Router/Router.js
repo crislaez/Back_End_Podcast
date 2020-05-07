@@ -41,13 +41,24 @@ function endPoint(app){
             if(!data) return res.status(404).json({message: `error al enviar los datos`});
 
             res.status(200).json({success:true, data: data});
-        })
+        });
     });
 
-    // // por id
-    // router.get('/:id', (req, res) => {
+    // por id
+    router.post('/login', (req, res) => {
+        let usuario = 
+            {
+                correo:req.body.correo,
+                clave:req.body.clave
+            };
 
-    // });
+        Database.loginUser(usuario, (err, data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al enviar los datos`});
+
+            res.status(200).json({success:true, data: data});
+        });
+    });
 
     // //actualizar por id
     // router.put('/update/:id', (req, res) => {

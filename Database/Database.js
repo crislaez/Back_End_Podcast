@@ -31,7 +31,6 @@ const addUser = (usuario, callback) => {
     //abrir conexion
     conexion.connect();
     if(conexion){
-
         conexion.query("INSERT INTO usuarios SET ?",usuario,  (err, res) => {
             if(!err){
                 callback(null, {data: res}); //null seria el error, en este caso vacio
@@ -42,8 +41,21 @@ const addUser = (usuario, callback) => {
     conexion.end();
 };
 
+const loginUser = (usuario, callback) => {
+
+    conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM usuarios WHERE correo = ${conexion.escape(usuario.correo)} AND clave = ${conexion.escape(usuario.clave)} `, (err, res) => {
+            if(!err){
+                callback(null, {message:'success', data: res});
+            }
+        })
+    }
+}
+
 module.exports = 
     {
         getAllUsers,
         addUser,
+        loginUser
     };
