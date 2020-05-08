@@ -60,10 +60,31 @@ function endPoint(app){
         });
     });
 
+    //añadir podcas
+    router.post('/podcast',multipartMiddleware, (req, res) => {
+        let aux = req.files.mp3.path.split('\\');
+        let aux2 = req.files.foto.path.split('\\');
+              
+        let podcast = 
+            {
+                id_usuario: req.body.id_usuario,
+                id_podcast: '',
+                titulo: req.body.titulo,
+                mp3:'http://localhost:3001/sound/'+aux[1],
+                foto:'http://localhost:3001/sound/'+aux2[1]
+            };
+            
+        Database.addPodcast(podcast, (err, data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al enviar los datos`});
+
+            res.status(200).json({success:true, data: data});
+        })
+    })
+
     // //actualizar por id
     // router.put('/update/:id', (req, res) => {
-
-    // });
+    // });                      
 
     // //borrar por id
     // router.delete('/delete/:id', (req, res) => {

@@ -51,11 +51,27 @@ const loginUser = (usuario, callback) => {
             }
         })
     }
+    conexion.end();
+}
+
+const addPodcast = (podcast, callback) => {
+
+    conexion.connect();
+    if(conexion){
+        conexion.query("INSERT INTO podcast SET ?",podcast, (err, res) => {
+            if(!err){
+                callback(null,{data: res});
+            }
+        })
+
+    }
+    conexion.end();
 }
 
 module.exports = 
     {
         getAllUsers,
         addUser,
-        loginUser
+        loginUser,
+        addPodcast
     };
