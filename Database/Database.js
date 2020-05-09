@@ -13,8 +13,11 @@ const conexion = mysql.createConnection({
     database:process.env.BBDD
 });
 
+conexion.connect();
+
 const getAllUsers = (callback) => {
-    conexion.connect();
+
+    // conexion.connect();
     if(conexion){
         conexion.query("SELECT * FROM usuarios", (err, res) => {
             if(!err){
@@ -22,14 +25,14 @@ const getAllUsers = (callback) => {
             }
         })
     }
-    conexion.end();
+    // conexion.end();
 
 };
 
 //funciones para la base de datos
 const addUser = (usuario, callback) => {
-    //abrir conexion
-    conexion.connect();
+ 
+    // conexion.connect();
     if(conexion){
         conexion.query("INSERT INTO usuarios SET ?",usuario,  (err, res) => {
             if(!err){
@@ -38,12 +41,12 @@ const addUser = (usuario, callback) => {
         })
     }
     //cerrar conexion
-    conexion.end();
+    // conexion.end();
 };
 
 const loginUser = (usuario, callback) => {
 
-    conexion.connect();
+    // conexion.connect();
     if(conexion){
         conexion.query(`SELECT * FROM usuarios WHERE correo = ${conexion.escape(usuario.correo)} AND clave = ${conexion.escape(usuario.clave)} `, (err, res) => {
             if(!err){
@@ -51,12 +54,12 @@ const loginUser = (usuario, callback) => {
             }
         })
     }
-    conexion.end();
+    // conexion.end();
 }
 
 const addPodcast = (podcast, callback) => {
 
-    conexion.connect();
+    // conexion.connect();
     if(conexion){
         conexion.query("INSERT INTO podcast SET ?",podcast, (err, res) => {
             if(!err){
@@ -65,7 +68,20 @@ const addPodcast = (podcast, callback) => {
         })
 
     }
-    conexion.end();
+    // conexion.end();
+}
+
+const gePodcastById = (id, callback) => {
+
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM podcast WHERE id_usuario = ${conexion.escape(id)}`, (err, res) => {
+            if(!err){
+                callback(null, {data:res})
+            }
+        })
+    }
+    // conexion.end();
 }
 
 module.exports = 
@@ -73,5 +89,6 @@ module.exports =
         getAllUsers,
         addUser,
         loginUser,
-        addPodcast
+        addPodcast,
+        gePodcastById
     };

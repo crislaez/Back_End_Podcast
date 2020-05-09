@@ -13,7 +13,7 @@ app.use(express.json());
 
 
 //para poder coger la ruta de la carpeta htt://localhost:3001/sound/nombrefoto.jpg
-app.use('/img', express.static(__dirname + '/sound', {
+app.use('/sound', express.static(__dirname + '/sound', {
     maxAge: '12h'
 }));
 

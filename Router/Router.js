@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart({uploadDir: './sound'}) /// ./sound es pa carpeta donde se subira la foto
 //objeto donde estan todas las funciones de la databse
@@ -13,7 +14,7 @@ function endPoint(app){
 
     app.use('/api', router);
 
-    //todos ruta -> http://localhost:3001/api/all
+    //todos los usuarios: ruta -> http://localhost:3001/api/all
     router.get('/all', (req, res) => {
 
         Database.getAllUsers( (err, data) => {
@@ -24,7 +25,7 @@ function endPoint(app){
         })
     });
 
-    //añadir usuario ruta-> http://localhost:3001/api/add
+    //añadir usuario: ruta-> http://localhost:3001/api/add
     router.post('/add', (req, res) => {
         let usuario = 
             {
@@ -44,7 +45,7 @@ function endPoint(app){
         });
     });
 
-    // por id
+    //loguear usuiario: ruta -> http://localhost:3001/api/login
     router.post('/login', (req, res) => {
         let usuario = 
             {
@@ -60,7 +61,7 @@ function endPoint(app){
         });
     });
 
-    //añadir podcas
+    //añadir podcast: ruta -> ruta-> http://localhost:3001/api/podcast
     router.post('/podcast',multipartMiddleware, (req, res) => {
         let aux = req.files.mp3.path.split('\\');
         let aux2 = req.files.foto.path.split('\\');
@@ -75,6 +76,18 @@ function endPoint(app){
             };
             
         Database.addPodcast(podcast, (err, data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al enviar los datos`});
+
+            res.status(200).json({success:true, data: data});
+        })
+    })
+
+    //mostrar topdos los podcast por id de usuario: ruta-> http://localhost:3001/api/podcast/1
+    router.get('/podcast/:id', (req, res) => {
+        let id_usuario = req.params.id;
+
+        Database.gePodcastById(id_usuario, (err, data) => {
             if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
             if(!data) return res.status(404).json({message: `error al enviar los datos`});
 
