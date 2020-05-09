@@ -25,8 +25,8 @@ function endPoint(app){
         })
     });
 
-    //añadir usuario: ruta-> http://localhost:3001/api/add
-    router.post('/add', (req, res) => {
+    //añadir usuario: ruta-> http://localhost:3001/api/addUser
+    router.post('/addUser', (req, res) => {
         let usuario = 
             {
                 id_usuario: '',
@@ -61,8 +61,8 @@ function endPoint(app){
         });
     });
 
-    //añadir podcast: ruta -> ruta-> http://localhost:3001/api/podcast
-    router.post('/podcast',multipartMiddleware, (req, res) => {
+    //añadir podcast: ruta -> ruta-> http://localhost:3001/api/addPodcast
+    router.post('/addPodcast',multipartMiddleware, (req, res) => {
         let aux = req.files.mp3.path.split('\\');
         let aux2 = req.files.foto.path.split('\\');
               
@@ -92,6 +92,29 @@ function endPoint(app){
             if(!data) return res.status(404).json({message: `error al enviar los datos`});
 
             res.status(200).json({success:true, data: data});
+        })
+    })
+
+    //borrar podcast por id: ruta -> http://localhost:3001/api/deletePodcast/1
+    router.delete('/deletePodcast/:id', (req, res) => {
+        let id_podcast = req.params.id;
+
+        Database.deletePodcast(id_podcast, (err, data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al borrar los datos`})
+            
+            res.status(200).json({success:true, data:data})
+        })
+    })
+    
+    //mostrar todos los podcast: ruta -> http://localhost:3001/api/podcast
+    router.get('/podcast', (req, res) => {
+
+        Database.getAllPodcast( (err,data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al borrar los datos`})
+            
+            res.status(200).json({success:true, data:data})
         })
     })
 
