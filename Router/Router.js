@@ -118,15 +118,17 @@ function endPoint(app){
         })
     })
 
-    // //actualizar por id
-    // router.put('/update/:id', (req, res) => {
-    // });                      
+    //buscar podcast por nombre usuario: ruta -> http://localhost:3001/api/podcastByUser/Roberto
+    router.get('/podcastByUser/:nombre', (req, res) => {
+        let nombre_usuario = req.params.nombre;
 
-    // //borrar por id
-    // router.delete('/delete/:id', (req, res) => {
-
-    // });
-
+        Database.searchPodcastByUser(nombre_usuario, (err, data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al buscar podcast`})
+            
+            res.status(200).json({success:true, data:data})
+        })
+    })
 }
 
 module.exports = endPoint;

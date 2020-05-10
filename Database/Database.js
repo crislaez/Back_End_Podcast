@@ -97,7 +97,7 @@ const gePodcastById = (id, callback) => {
 const deletePodcast = (id, callback) => {
     // conexion.connect();
     if(conexion){
-        conexion.query(`DELETE FROM podcast WHERE id_podcast = ${conexion.escape(id)}`, (err, req) => {
+        conexion.query(`DELETE FROM podcast WHERE id_podcast = ${conexion.escape(id)}`, (err, res) => {
             if(!err){
                 callback(null, {data:' Podcastr borrado'});
             }
@@ -105,8 +105,19 @@ const deletePodcast = (id, callback) => {
     }
     // conexion.end();
 }
-
-
+// 
+//buscat podcast por usuario
+const searchPodcastByUser = (name, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM podcast INNER JOIN usuarios on podcast.id_usuario = usuarios.id_usuario WHERE usuarios.nombre = ${conexion.escape(name)}`, (err, res) => {
+            if(!err){
+                callback(null, {data:res});
+            }
+        })
+    }
+    // conexion.end();
+}
 
 module.exports = 
     {
@@ -116,5 +127,6 @@ module.exports =
         loginUser,
         addPodcast,
         gePodcastById,
-        deletePodcast
+        deletePodcast,
+        searchPodcastByUser
     };
