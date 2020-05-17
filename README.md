@@ -1,6 +1,6 @@
 ## (back-end) CrisLaez Podcast
 
-CrisLaez Podcast es una aplicación web para subir podcast
+CrisLaez Podcast es una aplicación web para subir podcast (Node.js, Express y Mysql).
 
 <img src="https://github.com/crislaez/Front_End_Podcast/blob/master/src/img/foto_proyecto.PNG" />
 <hr>
@@ -11,7 +11,7 @@ CrisLaez Podcast es una aplicación web para subir podcast
 CrisLaez Podcast es una aplicacion web donde los usuarios pueden subir podcast y descargarlos
 
  
-### Donde puedne recibir ayuda los usuarios con el proyecto
+### Donde pueden recibir ayuda los usuarios con el proyecto
  
 Escribiendome a mi correo crislaez30@gmail.com
 
