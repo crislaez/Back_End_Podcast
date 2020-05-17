@@ -11,7 +11,7 @@ CrisLaez Podcast es una aplicación web para subir podcast
 CrisLaez Podcast es una aplicacion web donde los usuarios pueden subir podcast y descargarlos
 
  
-### Donde puedne recibir ayuda los usuarios con el proyecto
+### Donde pueden recibir ayuda los usuarios con el proyecto
  
 Escribiendome a mi correo crislaez30@gmail.com
 
