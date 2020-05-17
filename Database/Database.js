@@ -23,6 +23,8 @@ const getAllUsers = (callback) => {
         conexion.query("SELECT * FROM usuarios", (err, res) => {
             if(!err){
                 callback(null, {data:res})
+            }else{
+                console.log(err.code);
             }
         })
     }
@@ -35,6 +37,8 @@ const getAllPodcast = (callback) => {
         conexion.query("SELECT * FROM podcast", (err, res) => {
             if(!err){
                 callback(null, {data:res});
+            }else{
+                console.log(err.code);
             }
         })
     }
@@ -48,6 +52,8 @@ const addUser = (usuario, callback) => {
         conexion.query("INSERT INTO usuarios SET ?",usuario,  (err, res) => {
             if(!err){
                 callback(null, {data: res}); //null seria el error, en este caso vacio
+            }else{
+                console.log(err.code);
             }
         })
     }
@@ -61,6 +67,8 @@ const loginUser = (usuario, callback) => {
         conexion.query(`SELECT * FROM usuarios WHERE correo = ${conexion.escape(usuario.correo)} AND clave = ${conexion.escape(usuario.clave)} `, (err, res) => {
             if(!err){
                 callback(null, {message:'success', data: res});
+            }else{
+                console.log(err.code);
             }
         })
     }
@@ -74,6 +82,8 @@ const addPodcast = (podcast, callback) => {
         conexion.query("INSERT INTO podcast SET ?",podcast, (err, res) => {
             if(!err){
                 callback(null,{data: res});
+            }else{
+                console.log(err.code);
             }
         })
     }
@@ -87,6 +97,8 @@ const gePodcastById = (id, callback) => {
         conexion.query(`SELECT * FROM podcast WHERE id_usuario = ${conexion.escape(id)}`, (err, res) => {
             if(!err){
                 callback(null, {data:res});
+            }else{
+                console.log(err.code);
             }
         })
     }
@@ -100,6 +112,8 @@ const deletePodcast = (id, callback) => {
         conexion.query(`DELETE FROM podcast WHERE id_podcast = ${conexion.escape(id)}`, (err, res) => {
             if(!err){
                 callback(null, {data:' Podcastr borrado'});
+            }else{
+                console.log(err.code);
             }
         })
     }
@@ -113,6 +127,8 @@ const searchPodcastByUser = (name, callback) => {
         conexion.query(`SELECT * FROM podcast INNER JOIN usuarios on podcast.id_usuario = usuarios.id_usuario WHERE usuarios.nombre = ${conexion.escape(name)}`, (err, res) => {
             if(!err){
                 callback(null, {data:res});
+            }else{
+                console.log(err.code);
             }
         })
     }
